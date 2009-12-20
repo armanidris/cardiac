@@ -35,63 +35,28 @@ class pengkajianConfig extends config
         'user' => 'root',
         'passwd' => 'emmank'
     );
-    var $hiddenfields = array(
-        'id'
+    var $module_included = array(
+        'riwayatKesehatan',
+        'alergi',
+        'kondisi',
+        'nutrisi',
+        'cairan',
+        'aktivitas',
+        'eliminasi',
+        'polatidur',
+        'psikoSosial',
+        'cairanAktivitas'
     );
-    var $typeoffields = array(
-        'id' => 'hidden',
-    );
-    var $fieldsisarray = array(
-        
-    );
-    var $reftable = array(
-        'risk_factor' => array('ref_present_risk_factor', 'risk_factor'),
-    );
-
-    var $table_scheme = array(
-        'pengkajian' => array(
-            'id' => array(
-                'type' => 'int(11)',
-                'null' => 0,
-                'key' => 'pri',
-                'default' => NULL,
-                'extra' => ''
-            ),
-            'perawatan' => array(
-                'type' => 'int(11)',
-                'null' => 0,
-                'key' => '',
-                'default' => NULL,
-                'extra' => ''
-            ),
-            'tgl' => array(
-                'type' => 'date',
-                'null' => 0,
-                'key' => '',
-                'default' => NULL,
-                'extra' => ''
-            ),
-            'inputer' => array(
-                'type' => 'int(11)',
-                'null' => 0,
-                'key' => '',
-                'default' => NULL,
-                'extra' => ''
-            ),
-            'inputtime' => array(
-                'type' => 'datetime',
-                'null' => 0,
-                'key' => '',
-                'default' => NULL,
-                'extra' => ''
-            ),
-            'updated' => array(
-                'type' => 'varchar(100)',
-                'null' => 0,
-                'key' => '',
-                'default' => NULL,
-                'extra' => ''
-            )
-        )
+    var $module_tableuse = array(
+        'riwayatKesehatan' => 'riwayat_kesehatan',
+        'alergi' => 'alergi',
+        'kondisi' => 'kondisi',
+        'nutrisi' => 'nutrisi',
+        'cairan' => 'cairan',
+        'aktivitas' => 'aktivitas',
+        'eliminasi' => 'eliminasi',
+        'polatidur' => 'polatidur',
+        'psikoSosial' => 'psikoSosial',
+        'cairanAktivitas' => 'cairan_aktivitas'
     );
 }

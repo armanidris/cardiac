@@ -45,7 +45,7 @@ class vascularModule extends mainModule
             'title' => __t('form vascular'),
             'description' => __t('formulir vascular'),
             'path' => '/user/vascular/form_submit',
-            'exec' => '_form_submit',
+            'exec' => 'form_submit',
             'weight' => '0',
             'user_required' => 'vascular'
         );
@@ -77,7 +77,7 @@ class vascularModule extends mainModule
             'title' => __t('detail vascular'),
             'description' => __t("detail vascular's patients"),
             'path' => '/user/vascular/detail_form',
-            'exec' => '_detail_form',
+            'exec' => 'detail_form',
             'weight' => '0',
             'user_required' => 'users'
         );
@@ -85,7 +85,7 @@ class vascularModule extends mainModule
             'title' => __t('search vascular'),
             'description' => __t("search vascular's patients"),
             'path' => '/user/vascular/search',
-            'exec' => '_search',
+            'exec' => 'search',
             'weight' => '0',
             'user_required' => 'users'
         );
@@ -93,14 +93,14 @@ class vascularModule extends mainModule
             'title' => __t('submitted search vascular'),
             'description' => __t("submitted search vascular's patients"),
             'path' => '/user/vascular/search_submit',
-            'exec' => '_search_submit',
+            'exec' => 'search_submit',
             'weight' => '0',
             'user_required' => 'users'
         );
         return $items;
     }
 
-    function _search_submit(){
+    function search_submit(){
         return $this->__get_search_submit();
     }
 
@@ -180,7 +180,7 @@ class vascularModule extends mainModule
         return $result;
     }
 
-    function _search(){
+    function search(){
         return $this->__get_search();
     }
 
@@ -310,7 +310,7 @@ class vascularModule extends mainModule
         return $result;
     }
 
-    function _detail_form(){
+    function detail_form(){
         return $this->__detail_form();
     }
 
@@ -662,11 +662,13 @@ class vascularModule extends mainModule
         $form['vascular']['tab_items']['carotis'] = $this->__loadCarotis();
         $form['vascular']['tab_items']['superior'] = $this->__loadSuperior();
         $form['vascular']['tab_items']['inferior'] = $this->__loadInferior();
-<<<<<<< HEAD
+
 //        $form['vascular']['tab_items']['abdomen'] = $this->__loadFaseLatihan();
-=======
+
         $form['vascular']['tab_items']['vascabdomen'] = $this->__loadAbdomen();
->>>>>>> b9c8420f4362aab62a817374ce92e2cb8711d8da
+
+//        $form['vascular']['tab_items']['abdomen'] = $this->__loadFaseLatihan();
+        $form['vascular']['tab_items']['vascabdomen'] = $this->__loadAbdomen();
 //        $form['vascular']['tab_items']['recovery'] = $this->__loadFaseRecovery();
 //        $form['vascular']['tab_items']['kesimpulan'] = $this->__loadKesimpulan();
 
@@ -719,19 +721,18 @@ class vascularModule extends mainModule
         }
     }
 
-<<<<<<< HEAD
-    function __loadFaseLatihan($exec=NULL){
-        $this->__include_module('latihan');
-        if(isset($this->vardump) && count($this->vardump) > 0){
-            $this->FaseLatihan_config->free_val = $this->vardump;
-        }
-        if(!is_null($exec)){
-            if($exec == 'submit'){
-                return $this->latihan_exec->vascular_submit();
-            }
-        } else {
-            return $this->latihan_exec->vascular_menu();
-=======
+
+//    function __loadFaseLatihan($exec=NULL){
+//        $this->__include_module('latihan');
+//        if(isset($this->vardump) && count($this->vardump) > 0){
+//            $this->FaseLatihan_config->free_val = $this->vardump;
+//        }
+//        if(!is_null($exec)){
+//            if($exec == 'submit'){
+//                return $this->latihan_exec->vascular_submit();
+//            }
+//        } else {
+//            return $this->latihan_exec->vascular_menu();
     function __loadAbdomen($exec=NULL){
         $this->__include_module('vascabdomen');
         if(isset($this->vardump) && count($this->vardump) > 0){
@@ -743,7 +744,6 @@ class vascularModule extends mainModule
             }
         } else {
             return $this->vascabdomen_exec->vascular_menu();
->>>>>>> b9c8420f4362aab62a817374ce92e2cb8711d8da
         }
     }
 
@@ -776,7 +776,7 @@ class vascularModule extends mainModule
         }
     }
 
-    function _form_submit(){
+    function form_submit(){
         return $this->__get_form_submit();
     }
 
@@ -827,11 +827,8 @@ class vascularModule extends mainModule
         $this->__loadCarotis('submit');
         $this->__loadSuperior('submit');
         $this->__loadInferior('submit');
-<<<<<<< HEAD
 //        $this->__loadFaseLatihan('submit');
-=======
         $this->__loadAbdomen('submit');
->>>>>>> b9c8420f4362aab62a817374ce92e2cb8711d8da
 //        $this->__loadFaseRecovery('submit');
 //        $this->__loadKesimpulan('submit');
         if(!isset($_POST['id']) || is_null($_POST['id']) || $_POST['id'] == ''){

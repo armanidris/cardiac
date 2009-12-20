@@ -117,7 +117,7 @@ class perawatanModule extends mainModule
     }
 
     function __redirect(){
-        redirect_to('/care/' . $_POST['items'] . '/' . $_POST['pid']);
+        redirect_to('/care/perawatan/' . $_POST['items'] . '/' . $_POST['pid']);
     }
 
     function _search(){
@@ -502,7 +502,7 @@ class perawatanModule extends mainModule
                                 'user_required' => 'perawatan',
                                 'filter' => 'items',
                                 'items' => array (
-                                    'id' => $vcache['id']
+                                    'pid' => $vcache['id']
                                 )
                             );
                         } unset($rujukanopts);
@@ -753,10 +753,15 @@ class perawatanModule extends mainModule
         );
         unset($query);
         $thefields = $this->__get_data_fields('perawatan', $this->query);
+
         foreach($this->vardump as $key => $value){
+//            echo "<pre>";print_r($value);echo "</pre>";
             if(in_array($key, $thefields)){
-                if($key == 'pukul_masuk'){
-                    ksort($value);
+                if($this->config->typeoffields[$key] == 'date'){
+                    $value = explode('|', $value);
+                    $value = implode('-', $value);
+                } elseif($this->config->typeoffields[$key] == 'datetime'){
+                    $value = explode('-', $value);
                     $value = $value[0] . '-' . $value[1] . '-' . $value[2] . ' ' . $value[3] . ':' . $value[4] . ':' . $value[5];
                 }
                 $thevalue[$key] = $value;

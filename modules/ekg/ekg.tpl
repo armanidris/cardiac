@@ -86,6 +86,7 @@ foreach($data as $key => $value){
     $cnt = 0;
     foreach($value as $yk => $lv){
         if(!eregi('#', $yk) && is_array($lv) && $yk != 'submit'){
+//            echo "<pre>";print_r($lv);echo "</pre>";
             if($lv['#type'] != 'hidden' && !isset($lv['#tbpos'])){
                 $result .= '<tr valign="top">' . "\n";
                 if(!isset($lv['#customized'])){
@@ -114,6 +115,7 @@ foreach($data as $key => $value){
                     if(!is_array($lv['#value'])){
                         $lv['#value'] = explode('|', $lv['#value']);
                     }
+//                    echo "<pre>";print_r($lv);echo "</pre>";
                     if(!isset($dumpt)){$dumpt = array();}
                     if(!in_array($lv['#customized']['title'], $dumpt)){
                         $dumpt[] = $lv['#customized']['title'];
@@ -126,11 +128,13 @@ foreach($data as $key => $value){
                         if(isset($lv['#readonly']) && $lv['#readonly'] !== FALSE){
                             $result .= $lv['#value'][0];
                         } else {
+                            
                             foreach($lv['#customized']['option'] as $kk => $vv){
+                                
                                 if(isset($koma)){
-                                    $result .= '<br />';
+                                    $result .= '<br /> ';
                                 }
-                                $result .= '<input type="radio" name="' . $yk . '[0]" value="' . $kk . '"' . (isset($lv['#value'][0]) && $lv['#value'][0] == $kk ? ' checked="true"' : '') . '> ' . $vv;
+                                $result .= '<input type="radio" name="' . $yk . '[0]" value="'.$kk.'"> '. $kk ;//<input type="radio" name="' . $yk . '[0]" value="' . $kk . '"' . (isset($lv['#value'][0]) && $lv['#value'][0] == $kk ? ' checked="true"' : '') . '> ' . $vv;
                                 $koma = 0;
                             } unset($koma);
                         }

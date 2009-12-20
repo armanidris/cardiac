@@ -155,7 +155,7 @@ class mainModule
                     );
                 } else {
                     if($dbfieldlists[$value]['Type'] != $this->config->table_scheme[$tablename][$value]['type'] ||
-                        (trim($this->config->table_scheme[$tablename][$value]['key']) != '' && !eregi($dbfieldlists[$value]['Key'], $this->config->table_scheme[$tablename][$value]['key'])) ||
+                        (trim($this->config->table_scheme[$tablename][$value]['key']) != '' && !eregi($this->config->table_scheme[$tablename][$value]['key'], $dbfieldlists[$value]['Key'])) ||
                         $dbfieldlists[$value]['Null'] != $this->config->table_scheme[$tablename][$value]['null'] ||
                         $dbfieldlists[$value]['Default'] != $this->config->table_scheme[$tablename][$value]['default'] ||
                         $dbfieldlists[$value]['extra'] != $this->config->table_scheme[$tablename][$value]['extra']){
@@ -533,8 +533,9 @@ class mainModule
                 $value = implode('-', $value);
                 $result[$key] = $value;
             } elseif(is_array($value)){
-                $result[$key] = $value;
+                ksort($value);
                 $value = implode('|', $value);
+                $result[$key] = $value;
             } else {
                 if($value == ''){
                     if(!isset($blank)){
@@ -877,6 +878,26 @@ class mainModule
         return $result;
     }
 
+    function __get_pengkajian_lists(){
+        $result = array();
+        $this->query->connect();
+        $sql = $this->query->getSelect(
+            array(),
+            array('pengkajian_items'),
+            NULL,
+            'id'
+        );
+        $query = $this->query->conn->Execute($sql); unset($sql);
+        $this->query->close();
+        if($query->_numOfRows > 0){
+            for($i=0; $i<$query->_numOfRows; $i++){
+                $result[$query->fields['items']] = __t($query->fields['items']);
+                $query->MoveNext();
+            }
+        }
+        return $result;
+    }
+
     function today_patient_lists(){
         $dump = explode('/', trim(preg_replace('/^\//','',$_GET['q'])));
         $bagian = trim($dump[1]);
@@ -1175,6 +1196,44 @@ class mainModule
            } unset($dump);
        }
 //       echo '<pre>'; print_r($result); echo '</pre>';
+       return $result;
+   }
+
+   function module_is_active($modulename){
+       $sql = $this->sysquery->getSelect(
+               array('id'),
+               array('modules'),
+               array(
+                   array('&&', "module=" . $modulename)
+               )
+       );
+       $this->sysquery->connect();
+       $getit = $this->sysquery->conn->Execute($sql); unset($sql);
+       $this->sysquery->close();
+       if($getit->_numOfRows > 0){
+           return TRUE;
+       } else {
+           return FALSE;
+       }
+   }
+
+   function __get_ref_options($tablename, $fverbose, $fchoose, $interpreter){
+       $result = array();
+       $sql = $interpreter->getSelect(
+               array($fchoose, $fverbose),
+               array($tablename),
+               NULL,
+               $fverbose . 'desc'
+       );
+       $interpreter->connect();
+       $getit = $interpreter->conn->Execute($sql); unset($sql);
+       $interpreter->close();
+       if($getit->_numOfRows > 0){
+           for($i=0; $i<$getit->_numOfRows; $i++){
+               $result[$getit->fields[$fchoose]] = $getit->fields[$fverbose];
+               $getit->MoveNext();
+           }
+       } unset($getit);
        return $result;
    }
 
